@@ -15,8 +15,8 @@ const logger = createLogger('TodosAccess')
 export class TodosAccess {
   
   docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient();
-  todoTable: string = 'todos';
-  indexName: string = 'createdAt';
+  todoTable: string = 'Todos';
+  indexName: string = 'CreatedAtIndex';
 
   async getTodosForUser(userId: string): Promise<TodoItem[]> {
     const result = await this.docClient.query({
@@ -73,11 +73,14 @@ export class TodosAccess {
         todoId: todoId,
         userId: userId
       },
-      UpdateExpression: " SET name = :name , dueDate = :dueDate, done = :done ",
+      UpdateExpression: " SET #name = :name , dueDate = :dueDate, done = :done ",
       ExpressionAttributeValues: {
         ":name": item.name || null,
         ":dueDate": item.dueDate || null,
         ":done": item.done || null
+      },
+      ExpressionAttributeNames : {
+        "#name": "name"
       }
     }).promise();
     return "updated Todo " + todoId;

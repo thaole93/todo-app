@@ -51,8 +51,7 @@ export async function updateTodo(todoId: string, userId: string,
         logger.error('User ' + userId + ' do not have permission to update item' + todoId);
         throw createError(409, 'User ' + userId + ' do not have permission to update item' + todoId);
     }
-    await todoAccess.updateTodo(todoId, userId, updateRequest);
-
+    return todoAccess.updateTodo(todoId, userId, updateRequest);
 }
 
 export async function deleteTodo(todoId: string, userId: string): Promise<any>{

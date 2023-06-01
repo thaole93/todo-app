@@ -26,10 +26,12 @@ export const handler = middy(
       logger.info('Get presignedURL for todoId: ' + todoId)
       return {
         statusCode: 200,
-        body: JSON.stringify(signedUrl)
+        body: JSON.stringify({
+          url: signedUrl
+        })
       }
     } catch (e) {
-      logger.error('generateUploadUrl error: ', e.message)
+      logger.error('generateUploadUrl error: ' + e.message)
       return {
         statusCode: 500,
         body: 'Get presigned URL error: ' + e.message

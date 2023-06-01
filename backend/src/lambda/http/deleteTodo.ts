@@ -21,7 +21,7 @@ export const handler = middy(
         body: ''
       }
     } catch (e) {
-      logger.error('deleteTodo error: ', e.message)
+      logger.error('deleteTodo error: ' + e.message)
       return {
         statusCode: e.statusCode,
         body: 'Delete item fail'

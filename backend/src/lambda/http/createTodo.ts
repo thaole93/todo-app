@@ -22,7 +22,7 @@ export const handler = middy(
         })
       }
     } catch (e) {
-      logger.error('createToDo error: ', e.message);
+      logger.error('createToDo error: ' + e.message);
       return {
         statusCode: e.statusCode,
         body: 'Create item fail'

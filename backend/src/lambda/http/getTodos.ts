@@ -24,7 +24,7 @@ export const handler = middy(
         body: JSON.stringify({ todos })
       }
     } catch (e) {
-      logger.error('getTodos error: ', { error: e.message });
+      logger.error('getTodos error: ' + e.message );
       return {
         statusCode: 500,
         body: JSON.stringify({
