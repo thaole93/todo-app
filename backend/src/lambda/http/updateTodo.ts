@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
 import { updateTodo } from '../../businessLogic/todos'
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
+import {TodoItem} from "../../models/TodoItem";
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
 
@@ -16,9 +16,10 @@ export const handler = middy(
     const todoId = event.pathParameters.todoId;
     const userId = getUserId(event);
     logger.info('UserId: ' + userId);
-    const updatedTodo: UpdateTodoRequest = JSON.parse(event.body);
+    const item: TodoItem = JSON.parse(event.body);
+    
     try {
-      const result = await updateTodo(todoId, userId, updatedTodo);
+      const result = await updateTodo(todoId, userId, item);
       return {
         statusCode: 200,
         body: result

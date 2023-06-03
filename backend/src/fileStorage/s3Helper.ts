@@ -1,12 +1,12 @@
 import * as AWS from 'aws-sdk'
-import * as AWSXRay from 'aws-xray-sdk'
+import {createLogger} from "../utils/logger";
 
-const XAWS = AWSXRay.captureAWS(AWS)
+const logger = createLogger('s3Helper');
 
 // TODO: Implement the fileStogare logic
 export class s3Helper {
 
-  static s3: any = new XAWS.S3();
+  static s3: any = new AWS.S3({ signatureVersion: 'v4' });
   static bucket: string = process.env.ATTACHMENT_S3_BUCKET;
   static expireTime = parseInt(process.env.SIGNED_URL_EXPIRATION);
 
@@ -17,6 +17,7 @@ export class s3Helper {
       Expires: this.expireTime,
       ContentType: contentType
     });
+    logger.info('Generated signed url for put operation ' + signedUrl)
     return signedUrl;
   }
 
@@ -27,6 +28,7 @@ export class s3Helper {
       Key: `${todoId}.png`,
       Expires: this.expireTime
     });
+    logger.info('Generated signed url for get operation ' + signedUrl)
     return signedUrl;
   }
 

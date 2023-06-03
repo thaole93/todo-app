@@ -64,5 +64,5 @@ export async function deleteTodo(todoId: string, userId: string): Promise<any>{
 }
 
 export async function createAttachmentPresignedUrl(todoId: string): Promise<string>{
-    return s3Helper.getReadSignedUrl(todoId);
+    return s3Helper.getPutSignedUrl(todoId, 'image/png');
 }

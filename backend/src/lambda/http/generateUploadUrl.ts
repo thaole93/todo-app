@@ -22,12 +22,12 @@ export const handler = middy(
           body: 'Invalid userId ' + userId
         }
       }
-      const signedUrl = createAttachmentPresignedUrl(todoId);
+      const signedUrl = await createAttachmentPresignedUrl(todoId);
       logger.info('Get presignedURL for todoId: ' + todoId)
       return {
         statusCode: 200,
         body: JSON.stringify({
-          url: signedUrl
+          uploadUrl: signedUrl
         })
       }
     } catch (e) {
